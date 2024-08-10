@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const User = require("../../src/models/user.model");
 
 const signup = async (req, res) => {
   try {
