@@ -1,9 +1,12 @@
 const User = require("../models/user.model"); // Ensure this path is correct
+const pkg = require("@clerk/clerk-sdk-node");
+
+const clerkClient = pkg.clerkClient;
 
 const signup = async (req, res) => {
   try {
     console.log(req.body.email);
-    const { username, email, phoneNumber } = req.body;
+    const { clerkId, username, email, phoneNumber } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -11,6 +14,10 @@ const signup = async (req, res) => {
     }
 
     const createdUser = await User.create({ username, email, phoneNumber });
+
+    const clerkUser = await clerkClient.users.updateUser(clerkId, {
+      externalId: createdUser._id,
+    });
 
     return res.status(200).json({
       message: "User created successfully",
