@@ -30,16 +30,20 @@ const signup = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const { userId, address, isSeller } = req.body;
+    const { userId, phoneNumber, address, isSeller } = req.body;
 
-    if (!address && isSeller === undefined) {
+    if (!userId) {
+      return res.status(401).json({ message: "UserId is required" });
+    }
+
+    if (!address && !phoneNumber && isSeller === undefined) {
       // Updated check to avoid any issues with falsy values
       return res.status(400).json({ message: "No fields to update" });
     }
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { address, isSeller },
+      { address, phoneNumber, isSeller },
       { new: true } // Return the updated document
     );
 
