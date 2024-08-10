@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
+      unique: true,
       trim: true,
       require: true,
     },
@@ -24,6 +25,7 @@ const userSchema = new mongoose.Schema(
       street: { type: String },
       city: { type: String },
       state: { type: String },
+
       pinCode: { type: String },
     },
     isSeller: {
