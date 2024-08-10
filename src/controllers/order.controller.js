@@ -5,9 +5,9 @@ const mongoose = require("mongoose");
 const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find()
-      .populate('sellerId', 'username') // Adjust based on your User model's fields
-      .populate('customerId', 'username') // Adjust based on your User model's fields
-      .populate('productId'); // Populates the referenced product details
+      .populate("sellerId", "username") // Adjust based on your User model's fields
+      .populate("customerId", "username") // Adjust based on your User model's fields
+      .populate("productId", "productName", "productPrice"); // Populates the referenced product details
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -24,9 +24,9 @@ const getOrderById = async (req, res) => {
 
   try {
     const order = await Order.findById(id)
-      .populate('sellerId', 'username') // Adjust based on your User model's fields
-      .populate('customerId', 'username') // Adjust based on your User model's fields
-      .populate('productId'); // Populates the referenced product details
+      .populate("sellerId", "username") // Adjust based on your User model's fields
+      .populate("customerId", "username") // Adjust based on your User model's fields
+      .populate("productId"); // Populates the referenced product details
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
@@ -38,7 +38,14 @@ const getOrderById = async (req, res) => {
 
 // Controller to add a new order
 const addOrder = async (req, res) => {
-  const { sellerId, customerId, productId, productType, orderQuantity, orderPrice } = req.body;
+  const {
+    sellerId,
+    customerId,
+    productId,
+    productType,
+    orderQuantity,
+    orderPrice,
+  } = req.body;
 
   try {
     const order = new Order({
@@ -66,10 +73,12 @@ const updateOrder = async (req, res) => {
   }
 
   try {
-    const updatedOrder = await Order.findByIdAndUpdate(id, req.body, { new: true })
-      .populate('sellerId', 'username') // Adjust based on your User model's fields
-      .populate('customerId', 'username') // Adjust based on your User model's fields
-      .populate('productId'); // Populates the referenced product details
+    const updatedOrder = await Order.findByIdAndUpdate(id, req.body, {
+      new: true,
+    })
+      .populate("sellerId", "username") // Adjust based on your User model's fields
+      .populate("customerId", "username") // Adjust based on your User model's fields
+      .populate("productId"); // Populates the referenced product details
     if (!updatedOrder) {
       return res.status(404).json({ message: "Order not found" });
     }

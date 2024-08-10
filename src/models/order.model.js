@@ -40,6 +40,10 @@ const orderSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    orderDate: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   {
     timestamps: true,
