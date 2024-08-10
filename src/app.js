@@ -23,4 +23,8 @@ app.use("/fertilizer", fertilizerRouter);
 app.use("/equipment", equipmentRouter);
 app.use("/order", orderRouter);
 
+app.get("/",(req,res)=>{
+    res.send("heelo from krushigram of crew ventures")
+})
+
 module.exports = { app };
