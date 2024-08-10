@@ -4,7 +4,7 @@ const propertySchema = new mongoose.Schema(
   {
     propertyArea: {
       type: Number,
-      required: true,
+      require: true,
       trim: true,
     },
     propertyAreaUnit: {
@@ -12,10 +12,10 @@ const propertySchema = new mongoose.Schema(
       default: "Acres",
     },
     address: {
-      street: { type: String, required: true },
-      city: { type: String, required: true },
-      state: { type: String, required: true },
-      pinCode: { type: String, required: true },
+      street: { type: String, require: true },
+      city: { type: String, require: true },
+      state: { type: String, require: true },
+      pinCode: { type: String, require: true },
     },
     propertyPrice: {
       type: Number,
@@ -24,7 +24,7 @@ const propertySchema = new mongoose.Schema(
     },
     soilType: {
       type: String,
-      required: true,
+      require: true,
       trim: true,
     },
     isFarmable: {
@@ -38,7 +38,7 @@ const propertySchema = new mongoose.Schema(
     sellerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      require: true,
     },
   },
   {

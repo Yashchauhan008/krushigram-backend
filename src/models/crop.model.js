@@ -4,27 +4,27 @@ const cropSchema = new mongoose.Schema(
   {
     cropName: {
       type: String,
-      required: true,
+      require: true,
       trim: true,
     },
     cropQuantity: {
       type: Number,
-      required: true,
+      require: true,
       min: 0,
     },
     price: {
       type: Number,
-      required: true,
+      require: true,
       min: 0,
     },
     fertilizerUsed: {
-      fertilizerName: { type: String, required: true },
-      quantityUsed: { type: Number, required: true },
+      fertilizerName: { type: String, require: true },
+      quantityUsed: { type: Number, require: true },
       isOrganic: { type: Boolean, default: false },
     },
     harvestingTime: {
       type: Date,
-      required: true,
+      require: true,
     },
     images: {
       type: [String],
@@ -33,12 +33,12 @@ const cropSchema = new mongoose.Schema(
     cropType: {
       type: String,
       enum: ["Seed", "Harvested"], // Enum to define whether it's a seed or harvested crop
-      required: true,
+      require: true,
     },
     sellerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      require: true,
     },
   },
   {
@@ -49,7 +49,6 @@ const cropSchema = new mongoose.Schema(
 function arrayLimit(val) {
   return val.length <= 10;
 }
-
 
 const Crop = mongoose.model("Crop", cropSchema);
 

@@ -5,12 +5,12 @@ const orderSchema = new mongoose.Schema(
     sellerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      require: true,
     },
     customerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      require: true,
     },
     productId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -19,17 +19,17 @@ const orderSchema = new mongoose.Schema(
     },
     productType: {
       type: String,
-      required: true,
+      require: true,
       enum: ["Property", "Crop", "Fertilizer", "Equipment"], // The type of product ordered
     },
     orderQuantity: {
       type: Number,
-      required: true,
+      require: true,
       min: 1,
     },
     orderPrice: {
       type: Number,
-      required: true,
+      require: true,
       min: 0,
     },
     isAccepted: {

@@ -4,7 +4,7 @@ const equipmentSchema = new mongoose.Schema(
   {
     equipmentName: {
       type: String,
-      required: true,
+      require: true,
       trim: true,
     },
     category: {
@@ -14,12 +14,12 @@ const equipmentSchema = new mongoose.Schema(
     },
     quantity: {
       type: Number,
-      required: true,
+      require: true,
       min: 0,
     },
     price: {
       type: Number,
-      required: true,
+      require: true,
       min: 0,
     },
     equimentUsedTime: {
@@ -33,7 +33,7 @@ const equipmentSchema = new mongoose.Schema(
     sellerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      require: true,
     },
   },
   {
