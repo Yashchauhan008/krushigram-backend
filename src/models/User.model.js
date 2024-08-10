@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+function arrayLimit(val) {
+    return val.length <= 10;
+  }
+  
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
