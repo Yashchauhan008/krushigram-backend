@@ -10,7 +10,15 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 const userRouter = require("./routes/user.route");
+const propertyRouter = require("./routes/property.route");
+const cropRouter = require("./routes/crop.route");
+const fertilizerRouter = require("./routes/fertilizer.route");
+const equipmentRouter = require("./routes/equipment.route");
 
 app.use("/user", userRouter);
+app.use("/property", propertyRouter);
+app.use("/crop", cropRouter);
+app.use("/fertilizer", fertilizerRouter);
+app.use("/equipment", equipmentRouter);
 
 module.exports = { app };
