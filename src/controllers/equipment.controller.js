@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Controller to get all equipment
 const getAllEquipments = async (req, res) => {
   try {
-    const equipments = await Equipment.find();
+    const equipments = await Equipment.find().populate("sellerId");
     res.status(200).json(equipments);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -20,7 +20,7 @@ const getEquipmentById = async (req, res) => {
   }
 
   try {
-    const equipment = await Equipment.findById(id);
+    const equipment = await Equipment.findById(id).populate("sellerId");
     if (!equipment) {
       return res.status(404).json({ message: "Equipment not found" });
     }
@@ -32,7 +32,14 @@ const getEquipmentById = async (req, res) => {
 
 // Controller to add new equipment
 const addEquipment = async (req, res) => {
-  const { equipmentName, category, quantity, price, equimentUsedTime, sellerId } = req.body;
+  const {
+    equipmentName,
+    category,
+    quantity,
+    price,
+    equimentUsedTime,
+    sellerId,
+  } = req.body;
 
   try {
     const equipment = new Equipment({
@@ -41,7 +48,7 @@ const addEquipment = async (req, res) => {
       quantity,
       price,
       equimentUsedTime,
-      images: req.files.map(file => file.path), // Assuming `req.files` contains uploaded images
+      images: req.files.map((file) => file.path), // Assuming `req.files` contains uploaded images
       sellerId,
     });
 
@@ -61,7 +68,9 @@ const updateEquipment = async (req, res) => {
   }
 
   try {
-    const updatedEquipment = await Equipment.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedEquipment = await Equipment.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!updatedEquipment) {
       return res.status(404).json({ message: "Equipment not found" });
     }

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Controller to get all crops
 const getAllCrops = async (req, res) => {
   try {
-    const crops = await Crop.find();
+    const crops = await Crop.find().populate("sellerId");
     res.status(200).json(crops);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -14,13 +14,13 @@ const getAllCrops = async (req, res) => {
 // Controller to get a crop by ID
 const getCropById = async (req, res) => {
   const { id } = req.params;
-  
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid crop ID" });
   }
 
   try {
-    const crop = await Crop.findById(id);
+    const crop = await Crop.findById(id).populate("sellerId");
     if (!crop) {
       return res.status(404).json({ message: "Crop not found" });
     }
@@ -32,7 +32,15 @@ const getCropById = async (req, res) => {
 
 // Controller to add a new crop
 const addCrop = async (req, res) => {
-  const { cropName, cropQuantity, price, fertilizerUsed, harvestingTime, cropType, sellerId } = req.body;
+  const {
+    cropName,
+    cropQuantity,
+    price,
+    fertilizerUsed,
+    harvestingTime,
+    cropType,
+    sellerId,
+  } = req.body;
 
   try {
     const crop = new Crop({
@@ -41,7 +49,7 @@ const addCrop = async (req, res) => {
       price,
       fertilizerUsed,
       harvestingTime,
-      images: req.files.map(file => file.path), // Assuming `req.files` contains uploaded images
+      images: req.files.map((file) => file.path), // Assuming `req.files` contains uploaded images
       cropType,
       sellerId,
     });
@@ -56,13 +64,15 @@ const addCrop = async (req, res) => {
 // Controller to update a crop
 const updateCrop = async (req, res) => {
   const { id } = req.body;
-  
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid crop ID" });
   }
 
   try {
-    const updatedCrop = await Crop.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedCrop = await Crop.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!updatedCrop) {
       return res.status(404).json({ message: "Crop not found" });
     }

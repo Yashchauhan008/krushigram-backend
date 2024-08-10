@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Controller to get all properties
 const getAllProperties = async (req, res) => {
   try {
-    const properties = await Property.find();
+    const properties = await Property.find().populate("customerId");
     res.status(200).json(properties);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -14,13 +14,13 @@ const getAllProperties = async (req, res) => {
 // Controller to get a property by ID
 const getPropertyById = async (req, res) => {
   const { id } = req.params;
-  
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid property ID" });
   }
 
   try {
-    const property = await Property.findById(id);
+    const property = await Property.findById(id).populate("customerId");
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
@@ -32,7 +32,15 @@ const getPropertyById = async (req, res) => {
 
 // Controller to add a new property
 const addProperty = async (req, res) => {
-  const { propertyArea, propertyAreaUnit, address, propertyPrice, soilType, isFarmable, sellerId } = req.body;
+  const {
+    propertyArea,
+    propertyAreaUnit,
+    address,
+    propertyPrice,
+    soilType,
+    isFarmable,
+    sellerId,
+  } = req.body;
 
   try {
     const property = new Property({
@@ -43,7 +51,7 @@ const addProperty = async (req, res) => {
       soilType,
       isFarmable,
       sellerId,
-      images: req.files.map(file => file.path) // Assuming `req.files` contains uploaded images
+      images: req.files.map((file) => file.path), // Assuming `req.files` contains uploaded images
     });
 
     await property.save();
@@ -56,13 +64,15 @@ const addProperty = async (req, res) => {
 // Controller to update a property
 const updateProperty = async (req, res) => {
   const { id } = req.body;
-  
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid property ID" });
   }
 
   try {
-    const updatedProperty = await Property.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedProperty = await Property.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!updatedProperty) {
       return res.status(404).json({ message: "Property not found" });
     }

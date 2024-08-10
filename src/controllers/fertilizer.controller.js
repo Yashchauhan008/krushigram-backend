@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Controller to get all fertilizers
 const getAllFertilizers = async (req, res) => {
   try {
-    const fertilizers = await Fertilizer.find();
+    const fertilizers = await Fertilizer.find().populate("sellerId");
     res.status(200).json(fertilizers);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -20,7 +20,7 @@ const getFertilizerById = async (req, res) => {
   }
 
   try {
-    const fertilizer = await Fertilizer.findById(id);
+    const fertilizer = await Fertilizer.findById(id).populate("sellerId");
     if (!fertilizer) {
       return res.status(404).json({ message: "Fertilizer not found" });
     }
@@ -39,7 +39,7 @@ const addFertilizer = async (req, res) => {
       fertilizerName,
       quantity,
       price,
-      images: req.files.map(file => file.path), // Assuming `req.files` contains uploaded images
+      images: req.files.map((file) => file.path), // Assuming `req.files` contains uploaded images
       sellerId,
     });
 
@@ -59,7 +59,9 @@ const updateFertilizer = async (req, res) => {
   }
 
   try {
-    const updatedFertilizer = await Fertilizer.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedFertilizer = await Fertilizer.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!updatedFertilizer) {
       return res.status(404).json({ message: "Fertilizer not found" });
     }
