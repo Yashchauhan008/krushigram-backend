@@ -32,6 +32,12 @@ const fertilizerSchema = new mongoose.Schema(
   }
 );
 
+
+function arrayLimit(val) {
+  return val.length <= 10;
+}
+
+
 const Fertilizer = mongoose.model("Fertilizer", fertilizerSchema);
 
 module.exports = Fertilizer;

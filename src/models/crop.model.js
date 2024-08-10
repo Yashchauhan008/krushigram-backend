@@ -46,6 +46,11 @@ const cropSchema = new mongoose.Schema(
   }
 );
 
+function arrayLimit(val) {
+  return val.length <= 10;
+}
+
+
 const Crop = mongoose.model("Crop", cropSchema);
 
 module.exports = Crop;

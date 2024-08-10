@@ -46,6 +46,10 @@ const orderSchema = new mongoose.Schema(
   }
 );
 
+function arrayLimit(val) {
+  return val.length <= 10;
+}
+
 const Order = mongoose.model("Order", orderSchema);
 
 module.exports = Order;
