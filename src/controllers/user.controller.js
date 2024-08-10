@@ -4,12 +4,6 @@ const signup = async (req, res) => {
   try {
     const { username, email, phoneNumber } = req.body;
 
-    if (!username || !email || !phoneNumber) {
-      return res
-        .status(401)
-        .json({ message: "Username, Email and PhoneNumber is required" });
-    }
-
     const createdUser = await User.create({ username, email, phoneNumber });
 
     return res.status(200).json({
