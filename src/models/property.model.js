@@ -12,7 +12,7 @@ const propertySchema = new mongoose.Schema(
       default: "Acres",
     },
     address: {
-      type: string,
+      type: String,
       trim: true,
     },
     propertyPrice: {
