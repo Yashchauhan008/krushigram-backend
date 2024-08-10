@@ -15,11 +15,13 @@ const propertyRouter = require("./routes/property.route");
 const cropRouter = require("./routes/crop.route");
 const fertilizerRouter = require("./routes/fertilizer.route");
 const equipmentRouter = require("./routes/equipment.route");
+const orderRouter = require("./routes/order.route");
 
 app.use("/user", userRouter);
 app.use("/property", propertyRouter);
 app.use("/crop", cropRouter);
 app.use("/fertilizer", fertilizerRouter);
 app.use("/equipment", equipmentRouter);
+app.use("/order", orderRouter);
 
 module.exports = { app };
