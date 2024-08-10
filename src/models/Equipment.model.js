@@ -45,7 +45,6 @@ function arrayLimit(val) {
   return val.length <= 10;
 }
 
-
 const Equipment = mongoose.model("Equipment", equipmentSchema);
 
 module.exports = Equipment;
