@@ -2,7 +2,9 @@ const User = require("../models/user.model");
 
 const signup = async (req, res) => {
   try {
+    console.log(req.body.email);
     const { username, email, phoneNumber } = req.body;
+    console.log(username);
 
     const createdUser = await User.create({ username, email, phoneNumber });
 
