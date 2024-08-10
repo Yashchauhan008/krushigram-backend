@@ -1,7 +1,19 @@
 {
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.19.2"
+  "name": "krushigram-backend",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node -r dotenv/config src/server.js"
   },
-  "main": "server.js"
+  "author": "Hitesh Choudhary",
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "^2.4.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.2",
+    "multer": "^1.4.5-lts.1"
+  }
 }

@@ -1,8 +1,13 @@
+require("dotenv").config({
+  path: "./.env",
+});
 
-const { app } = require('./app.js');
+const mongoose = require("mongoose");
+const { app } = require("./app.js");
 
-const port=process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 
-app.listen(port, () => {
-  console.log("Server is running at port :", port);
-})
+mongoose.connection.once("open", () => {
+  console.log("Connected to mongoDB");
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});
