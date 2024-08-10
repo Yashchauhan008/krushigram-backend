@@ -9,6 +9,6 @@ const router = Router();
 
 router.route("/signup").post(signup);
 router.route("/update").patch(updateUser);
-router.route("/").get(getUserById);
+router.route("/:userId").get(getUserById);
 
 module.exports = router;
