@@ -12,10 +12,8 @@ const propertySchema = new mongoose.Schema(
       default: "Acres",
     },
     address: {
-      street: { type: String, require: true },
-      city: { type: String, require: true },
-      state: { type: String, require: true },
-      pinCode: { type: String, require: true },
+      type: string,
+      trim: true,
     },
     propertyPrice: {
       type: Number,

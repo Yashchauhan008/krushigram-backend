@@ -17,10 +17,16 @@ const cropSchema = new mongoose.Schema(
       require: true,
       min: 0,
     },
-    fertilizerUsed: {
-      fertilizerName: { type: String, require: true },
-      quantityUsed: { type: Number, require: true },
-      isOrganic: { type: Boolean, default: false },
+    fertilizerName: {
+      type: String,
+    },
+    fertilizerQuantityUsed: {
+      type: Number,
+      min: 0,
+    },
+    fertilizerIsOrganic: {
+      type: Boolean,
+      default: false,
     },
     harvestingTime: {
       type: Date,

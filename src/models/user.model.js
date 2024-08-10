@@ -22,10 +22,8 @@ const userSchema = new mongoose.Schema(
       require: true,
     },
     address: {
-      street: { type: String, require: true },
-      city: { type: String, require: true },
-      state: { type: String, require: true },
-      pinCode: { type: String, require: true },
+      type: string,
+      trim: true,
     },
     isSeller: {
       type: Boolean,
