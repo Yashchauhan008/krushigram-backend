@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
       require: true,
     },
     address: {
-      type: string,
+      type: String,
       trim: true,
     },
     isSeller: {
