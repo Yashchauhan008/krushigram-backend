@@ -5,17 +5,16 @@ const clerkClient = pkg.clerkClient;
 
 const signup = async (req, res) => {
   try {
-    console.log(req.body.email);
-    const { clerkId, username, email, phoneNumber } = req.body;
+    const { clerkId, username, email } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.json("User already exists");
+      return res.status(200).json("User already exists");
     }
 
-    const createdUser = await User.create({ username, email, phoneNumber });
+    const createdUser = await User.create({ username, email });
 
-    const clerkUser = await clerkClient.users.updateUser(clerkId, {
+    await clerkClient.users.updateUser(clerkId, {
       externalId: createdUser._id,
     });
 
