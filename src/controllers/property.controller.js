@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // Controller to get all properties
 const getAllProperties = async (req, res) => {
   try {
-    const properties = await Property.find().populate("customerId");
+    const properties = await Property.find().populate("sellerId");
     res.status(200).json(properties);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -20,7 +20,7 @@ const getPropertyById = async (req, res) => {
   }
 
   try {
-    const property = await Property.findById(id).populate("customerId");
+    const property = await Property.findById(id).populate("sellerId");
     if (!property) {
       return res.status(404).json({ message: "Property not found" });
     }
