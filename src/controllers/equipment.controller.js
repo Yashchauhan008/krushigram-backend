@@ -1,5 +1,6 @@
 const Equipment = require("../models/Equipment.model"); // Adjust the path to your Equipment model
 const mongoose = require("mongoose");
+const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 // Controller to get all equipment
 const getAllEquipments = async (req, res) => {
@@ -42,13 +43,19 @@ const addEquipment = async (req, res) => {
   } = req.body;
 
   try {
+    const paths = req.files.map((file) => file.path);
+    const images = paths.map(async (path) => {
+      const cloudinaryImage = await uploadOnCloudinary(path);
+      return cloudinaryImage.url;
+    });
+
     const equipment = new Equipment({
       equipmentName,
       category,
       quantity,
       price,
       equimentUsedTime,
-      images: req.files.map((file) => file.path), // Assuming `req.files` contains uploaded images
+      images, // Assuming `req.files` contains uploaded images
       sellerId,
     });
 

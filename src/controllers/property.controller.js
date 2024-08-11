@@ -1,5 +1,6 @@
 const Property = require("../models/property.model"); // Adjust the path to your Property model
 const mongoose = require("mongoose");
+const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 // Controller to get all properties
 const getAllProperties = async (req, res) => {
@@ -43,6 +44,12 @@ const addProperty = async (req, res) => {
   } = req.body;
 
   try {
+    const paths = req.files.map((file) => file.path);
+    const images = paths.map(async (path) => {
+      const cloudinaryImage = await uploadOnCloudinary(path);
+      return cloudinaryImage.url;
+    });
+
     const property = new Property({
       propertyArea,
       propertyAreaUnit,
@@ -51,7 +58,7 @@ const addProperty = async (req, res) => {
       soilType,
       isFarmable,
       sellerId,
-      images: req.files.map((file) => file.path), // Assuming `req.files` contains uploaded images
+      images, // Assuming `req.files` contains uploaded images
     });
 
     await property.save();
@@ -63,7 +70,7 @@ const addProperty = async (req, res) => {
 
 // Controller to update a property
 const updateProperty = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid property ID" });

@@ -1,5 +1,6 @@
 const Crop = require("../models/crop.model"); // Adjust the path to your Crop model
 const mongoose = require("mongoose");
+const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 // Controller to get all crops
 const getAllCrops = async (req, res) => {
@@ -43,13 +44,19 @@ const addCrop = async (req, res) => {
   } = req.body;
 
   try {
+    const paths = req.files.map((file) => file.path);
+    const images = paths.map(async (path) => {
+      const cloudinaryImage = await uploadOnCloudinary(path);
+      return cloudinaryImage.url;
+    });
+
     const crop = new Crop({
       cropName,
       cropQuantity,
       price,
       fertilizerUsed,
       harvestingTime,
-      images: req.files.map((file) => file.path), // Assuming `req.files` contains uploaded images
+      images, // Assuming `req.files` contains uploaded images
       cropType,
       sellerId,
     });

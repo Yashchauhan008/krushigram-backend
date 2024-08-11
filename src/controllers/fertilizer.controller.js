@@ -1,5 +1,6 @@
 const Fertilizer = require("../models/fertilizer.model"); // Adjust the path to your Fertilizer model
 const mongoose = require("mongoose");
+const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 // Controller to get all fertilizers
 const getAllFertilizers = async (req, res) => {
@@ -35,11 +36,17 @@ const addFertilizer = async (req, res) => {
   const { fertilizerName, quantity, price, sellerId } = req.body;
 
   try {
+    const paths = req.files.map((file) => file.path);
+    const images = paths.map(async (path) => {
+      const cloudinaryImage = await uploadOnCloudinary(path);
+      return cloudinaryImage.url;
+    });
+
     const fertilizer = new Fertilizer({
       fertilizerName,
       quantity,
       price,
-      images: req.files.map((file) => file.path), // Assuming `req.files` contains uploaded images
+      images, // Assuming `req.files` contains uploaded images
       sellerId,
     });
 
